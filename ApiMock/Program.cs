@@ -10,11 +10,13 @@ app.UseHttpsRedirection();
 
 app.MapGet("/api", (HttpRequest request) =>
 {
-    return new ResponseDto(request.Query["id"]);
+    var rnd = new Random();
+    var isCached = rnd.Next(1, 3) == 2;
+    return new ResponseDto(request.Query["id"], isCached);
 });
 
 app.Run();
 
-internal record ResponseDto(string Id)
+internal record ResponseDto(string Id, bool IsCached)
 {
 }
